@@ -1,0 +1,7 @@
+[
+    {
+        "quote": "Time is money",
+        "author": "Md. Mainul Hasan",
+        "year": "2025"
+    }
+]

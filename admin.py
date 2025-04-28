@@ -29,24 +29,46 @@ def inputInt(prompt):
 # 
 # See Point 2 of the "Functions in admin.py" section of the assignment brief.
 def inputSomething(prompt):
-    pass
+    while True:
+        something = input(prompt)
+        if something.strip() != "":
+            return something
 
 
 
 # 
 # See Point 3 of the "Functions in admin.py" section of the assignment brief.
 def saveChanges(dataList):
-    pass
+    with open('data.txt', 'w') as file:
+        json.dump(dataList, file, indent=4)
 
 
+# self define functions
+def addQuote():
+    quote = inputSomething('Enter the quote: ')
+    author = inputSomething('Enter the author: ')
+    year = inputSomething('Enter the year: ')
+    data.append({'quote': quote, 'author': author, 'year': year})
+    saveChanges(data)
 
+def abbreviateQuote(quote):
+    # Abbreviate the quote to a maximum of 50 characters.
+    if len(quote) > 50:
+        return quote[:47] + '...'
+    else:
+        return quote
 
 # Here is where you attempt to open data.txt and read the data into a "data" variable.
 # If the file does not exist or does not contain JSON data, set "data" to an empty list instead.
 # This is the only time that the program should need to read anything from the file.
 # See Point 1 of the "Requirements of admin.py" section of the assignment brief.
 
-
+# Reading the file
+try:
+    with open('data.txt', 'r') as file:
+        data = json.load(file)
+except:
+    data = []
 
 
 # 
@@ -61,7 +83,7 @@ while True:
     if choice == 'a':
         # Add a new quote.
         # See Point 3 of the "Requirements of admin.py" section of the assignment brief.
-        pass
+        addQuote()
 
 
     

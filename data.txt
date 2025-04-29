@@ -1,12 +1,7 @@
 [
     {
-        "quote": "Time is money",
-        "author": "Md. Mainul Hasan",
-        "year": "2025"
-    },
-    {
-        "quote": "In the abbreviated format, all details of a quote are presented on a single line. The index number (its",
-        "author": "Phunsuk Wangdu",
-        "year": "u"
+        "quote": "The great thing about getting older is that you don't lose all the other ages you've been.",
+        "author": "Madeleine L'Engle",
+        "year": "1985"
     }
 ]

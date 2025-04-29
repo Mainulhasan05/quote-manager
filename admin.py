@@ -51,10 +51,11 @@ def saveChanges(dataList):
 # self define functions
 def addQuote():
     quote = inputSomething('Enter the quote: ')
-    author = inputSomething('Enter the author: ')
+    author = inputSomething("Enter the author's name: ")
     year = inputSomething('Enter the year: ')
     data.append({'quote': quote, 'author': author, 'year': year})
     saveChanges(data)
+    print('Quote added!', end='\n\n')
 
 def abbreviateQuote(quote):
     # Abbreviate the quote to a maximum of 50 characters.
@@ -66,24 +67,34 @@ def abbreviateQuote(quote):
 def printList(quotes):
     for index, quote in enumerate(quotes):
         print(f'{index}) "{abbreviateQuote(quote['quote'])}" - {quote['author']}, {quote['year']}')
-        print('--------------------')
+        
 
-def searchQuote():
-    search_term = inputSomething('Enter a search term: ')
+def searchQuote(search_term):
     search_results = []
     for index, quote in enumerate(data):
         if search_term.lower() in quote['quote'].lower() or search_term.lower() in quote['author'].lower():
             search_results.append({'index': index,'quote': quote['quote'], 'author': quote['author'], 'year': quote['year']})
     return search_results
 
-def printSearchResults(search_results):
-    if len(search_results) == 0:
-        print('No results found.')
+def viewQuote(index):
+    if index < 0 or index >= len(data):
+        print('Invalid index.')
         return
-    print("Search results:")
-    for index, quote in enumerate(search_results):
-        print(f'{index}) "{abbreviateQuote(quote["quote"])}" - {quote["author"]}, {quote["year"]}')
-        print('--------------------')
+    quote = data[index]
+    print(f'"{quote['quote']}"')
+    if quote['year'] != 'u':
+        print(f" - {quote['author']}, {quote['year']}")
+    else:
+        print(f" - {quote['author']}")
+
+
+def deleteQuote(index):
+    if index < 0 or index >= len(data):
+        print('Invalid index.')
+        return
+    del data[index]
+    saveChanges(data)
+    print('Quote deleted.', end='\n\n')
 # Here is where you attempt to open data.txt and read the data into a "data" variable.
 # If the file does not exist or does not contain JSON data, set "data" to an empty list instead.
 # This is the only time that the program should need to read anything from the file.
@@ -117,6 +128,7 @@ while True:
         # List the current quotes.
         # See Point 4 of the "Requirements of admin.py" section of the assignment brief.
         # Quotes should be displayed in the "abbreviated" format when listing.
+        print("List of quotes:")
         printList(data)
 
 
@@ -125,9 +137,13 @@ while True:
         # Search the current quotes.
         # See Point 5 of the "Requirements of admin.py" section of the assignment brief.
         # Quotes should be displayed in the "abbreviated" format when searching.
-        
-        search_results = searchQuote()
-        printSearchResults(search_results)
+        search_term = inputSomething('Enter a search term: ')
+        search_results = searchQuote(search_term)
+        if len(search_results) == 0:
+            print('No results found.')
+            continue
+        print("Search results:")
+        printList(search_results)
 
 
 
@@ -135,14 +151,16 @@ while True:
         # View a quote.
         # See Point 6 of the "Requirements of admin.py" section of the assignment brief.
         # Quotes should be displayed in the "full" format when viewing.
-        pass
+        index = inputInt('Quote number to view: ')
+        viewQuote(index)
 
         
 
     elif choice == 'd':
         # Delete a quote.
         # See Point 7 of the "Requirements of admin.py" section of the assignment brief.
-        pass
+        index = inputInt('Quote number to delete: ')
+        deleteQuote(index)
 
         
 

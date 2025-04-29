@@ -22,7 +22,12 @@ import json
 # 
 # 
 def inputInt(prompt):
-    pass
+    while True:
+        try:
+            int_value = int(input(prompt))
+            return int_value
+        except:
+            pass
 
 
 
@@ -53,11 +58,32 @@ def addQuote():
 
 def abbreviateQuote(quote):
     # Abbreviate the quote to a maximum of 50 characters.
-    if len(quote) > 50:
-        return quote[:47] + '...'
+    if len(quote) > 40:
+        return quote[:40] + '...'
     else:
         return quote
 
+def printList(quotes):
+    for index, quote in enumerate(quotes):
+        print(f'{index}) "{abbreviateQuote(quote['quote'])}" - {quote['author']}, {quote['year']}')
+        print('--------------------')
+
+def searchQuote():
+    search_term = inputSomething('Enter a search term: ')
+    search_results = []
+    for index, quote in enumerate(data):
+        if search_term.lower() in quote['quote'].lower() or search_term.lower() in quote['author'].lower():
+            search_results.append({'index': index,'quote': quote['quote'], 'author': quote['author'], 'year': quote['year']})
+    return search_results
+
+def printSearchResults(search_results):
+    if len(search_results) == 0:
+        print('No results found.')
+        return
+    print("Search results:")
+    for index, quote in enumerate(search_results):
+        print(f'{index}) "{abbreviateQuote(quote["quote"])}" - {quote["author"]}, {quote["year"]}')
+        print('--------------------')
 # Here is where you attempt to open data.txt and read the data into a "data" variable.
 # If the file does not exist or does not contain JSON data, set "data" to an empty list instead.
 # This is the only time that the program should need to read anything from the file.
@@ -91,7 +117,7 @@ while True:
         # List the current quotes.
         # See Point 4 of the "Requirements of admin.py" section of the assignment brief.
         # Quotes should be displayed in the "abbreviated" format when listing.
-        pass
+        printList(data)
 
 
 
@@ -99,7 +125,9 @@ while True:
         # Search the current quotes.
         # See Point 5 of the "Requirements of admin.py" section of the assignment brief.
         # Quotes should be displayed in the "abbreviated" format when searching.
-        pass
+        
+        search_results = searchQuote()
+        printSearchResults(search_results)
 
 
 

@@ -3,5 +3,10 @@
         "quote": "Time is money",
         "author": "Md. Mainul Hasan",
         "year": "2025"
+    },
+    {
+        "quote": "In the abbreviated format, all details of a quote are presented on a single line. The index number (its",
+        "author": "Phunsuk Wangdu",
+        "year": "u"
     }
 ]

@@ -15,6 +15,7 @@
 
 # Import the json module to allow us to read and write data in JSON format.
 import json
+import textwrap
 
 
 
@@ -59,14 +60,12 @@ def addQuote():
 
 def abbreviateQuote(quote):
     # Abbreviate the quote to a maximum of 50 characters.
-    if len(quote) > 40:
-        return quote[:40] + '...'
-    else:
-        return quote
+    return textwrap.shorten(quote, width=40, placeholder='...') 
 
 def printList(quotes):
     for index, quote in enumerate(quotes):
-        print(f'{index}) "{abbreviateQuote(quote['quote'])}" - {quote['author']}, {quote['year']}')
+        print(f'{index}) "{abbreviateQuote(quote["quote"])}" - {quote["author"]}{" , " + quote["year"] if quote["year"] != "u" else ""}')
+
         
 
 def searchQuote(search_term):

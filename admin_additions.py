@@ -204,9 +204,15 @@ while True:
         # See Point 8 of the "Requirements of admin.py" section of the assignment brief.
         try:
             quote_details = inputSomething('Enter the quote details in this format of: ("Brevity is the soul of wit." - William Shakespeare, 1602): ')
-            quote =  quote_details.split('"')[1]           
-            author=quote_details.split('"')[2].split(',')[0].replace('-', '').strip()
-            year = quote_details.split('"')[2].split(',')[1].strip()
+            # quote =  quote_details.split('"')[1]           
+            # author=quote_details.split('"')[2].split(',')[0].replace('-', '').strip()
+            # year = quote_details.split('"')[2].split(',')[1].strip()
+            quote = quote_details.split('"')[1]
+            author_start_index = quote_details.rfind('-')
+            author_and_year= quote_details[author_start_index+1:].strip()
+            author = author_and_year.split(',')[0].strip()
+            year = author_and_year.split(',')[1].strip()
+            
             data.append({'quote': quote, 'author': author, 'year': year})
             saveChanges(data)
             print('Quote added!', end='\n\n')

@@ -10,7 +10,7 @@
         "year": "u"
     },
     {
-        "quote": "Mom said, Don't waste - money",
+        "quote": "Mom said, Money don't - waste a thing",
         "author": "Mom",
         "year": "u"
     }

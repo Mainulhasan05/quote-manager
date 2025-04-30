@@ -5,8 +5,13 @@
         "year": "1602"
     },
     {
-        "quote": "Time is money",
-        "author": "Md. Mainul Hasan",
+        "quote": "Time is money.",
+        "author": "Mainul",
+        "year": "u"
+    },
+    {
+        "quote": "Mom said, Don't waste - money",
+        "author": "Mom",
         "year": "u"
     }
 ]

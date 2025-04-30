@@ -74,6 +74,9 @@ def printList(quotes):
 
 
 def searchQuote(search_term):
+    if len(data) == 0:
+        print('There are no quotes saved. ',end='\n\n')
+        return
     search_results = []
     for index, quote in enumerate(data):
         if search_term.lower() in quote['quote'].lower() or search_term.lower() in quote['author'].lower():
@@ -101,8 +104,11 @@ def viewQuote(index):
 
 
 def deleteQuote(index):
-    if index < 0 or index >= len(data):
+    if index < 0 :
         print('Invalid index number.')
+        return
+    if index >= len(data):
+        print('Does not exist.')
         return
     if len(data) == 0:
         print("No quotes saved")
@@ -135,7 +141,7 @@ except:
 print('Welcome to the QuoteMaster Admin Program.')
 
 while True:
-    print('Choose [a]dd, [l]ist, [s]earch, [v]iew, [r]amdom, [i]nsert, [d]elete or [q]uit.')
+    print('Choose [a]dd, [l]ist, [s]earch, [v]iew, [r]andom, [i]nsert, [d]elete or [q]uit.')
     choice = input('> ')
         
     if choice == 'a':
@@ -197,16 +203,14 @@ while True:
         # Insert a quote.
         # See Point 8 of the "Requirements of admin.py" section of the assignment brief.
         try:
-            quote_details = inputSomething('Enter the quote details in the format of: ("Brevity is the soul of wit." - William Shakespeare, 1602): ')
-            quote =  quote_details.split('"')[1]
-            print("quote", quote)
-            total_possible_author = len(quote_details.split('-')[1].split(',')[0].strip())
-            print("total_possible_author", total_possible_author)
-            print(quote_details.split('-')[1].split(',')[0].strip())
-            author = quote_details.split('-')[1].split(',')[total_possible_author-1].strip()
-            print("author", author)
-            year = quote_details.split(',')[1].strip()
-            print("year", year)
+            quote_details = inputSomething('Enter the quote details in this format of: ("Brevity is the soul of wit." - William Shakespeare, 1602): ')
+            quote =  quote_details.split('"')[1]           
+            author=quote_details.split('"')[2].split(',')[0].replace('-', '').strip()
+            year = quote_details.split('"')[2].split(',')[1].strip()
+            data.append({'quote': quote, 'author': author, 'year': year})
+            saveChanges(data)
+            print('Quote added!', end='\n\n')
+            
         except:
             print("Invalid format")
             continue
@@ -216,5 +220,15 @@ while True:
     else:
         # Print "invalid choice" message.
         # See Point 9 of the "Requirements of admin.py" section of the assignment brief.
-        print("Invalid choice")
-        pass
+        choice = choice.lower()
+        if choice.startswith('s'):
+            keyword =   choice.split(' ')[1]
+            searchQuote(keyword)
+        elif choice.startswith('v'):
+            index =   choice.split(' ')[1]
+            viewQuote(int(index)-1)
+        elif choice.startswith('d'):
+            index =   choice.split(' ')[1]
+            deleteQuote(int(index)-1)
+        else:
+            print("Invalid choice")

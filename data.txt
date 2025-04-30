@@ -1,8 +1,8 @@
 [
     {
-        "quote": "The great thing about getting older is that you don't lose all the other ages you've been.",
-        "author": "Madeleine L'Engle",
-        "year": "1985"
+        "quote": "Brevity is the soul of wit.",
+        "author": "William Shakespeare",
+        "year": "1602"
     },
     {
         "quote": "Time is money",

@@ -16,6 +16,7 @@
 # Import the json module to allow us to read and write data in JSON format.
 import json
 import textwrap
+import random
 
 
 
@@ -26,6 +27,9 @@ def inputInt(prompt):
     while True:
         try:
             int_value = int(input(prompt))
+            if int_value <= 0:
+                print('input must be greater than 0.')
+                continue
             return int_value
         except:
             pass
@@ -64,7 +68,7 @@ def abbreviateQuote(quote):
 
 def printList(quotes):
     for index, quote in enumerate(quotes):
-        print(f'{index}) "{abbreviateQuote(quote["quote"])}" - {quote["author"]}{", " + quote["year"] if quote["year"] != "u" else ""}')
+        print(f'{index+1}) "{abbreviateQuote(quote["quote"])}" - {formatAuthor(quote)}')
 
 
 
@@ -79,20 +83,21 @@ def searchQuote(search_term):
         return
     print("Search results:")
     for index, quote in enumerate(search_results):
-        print(f'{quote["index"]}) "{abbreviateQuote(quote["quote"])}" - {quote["author"]}{", " + quote["year"] if quote["year"] != "u" else ""}')
+        print(f'{quote["index"]+1}) "{abbreviateQuote(quote["quote"])}" - {formatAuthor(quote)}')
 
 def viewQuote(index):
-    if index < 0 or index >= len(data):
+    if index < 0:
         print('Invalid index number.')
+        return
+    if index >= len(data):
+        print('Does not exist.')
         return
     if len(data) == 0:
         print("No quotes saved")
     quote = data[index]
     print(f'"{quote['quote']}"')
-    if quote['year'] != 'u':
-        print(f" - {quote['author']}, {quote['year']}")
-    else:
-        print(f" - {quote['author']}")
+    print(f' - {formatAuthor(quote)}')
+    print('')
 
 
 def deleteQuote(index):
@@ -104,6 +109,13 @@ def deleteQuote(index):
     del data[index]
     saveChanges(data)
     print('Quote deleted.', end='\n\n')
+
+def formatAuthor(quote):
+    if quote['year'] != 'u':
+        return f"{quote['author']}, {quote['year']}"
+    else:
+        return quote['author']
+
 # Here is where you attempt to open data.txt and read the data into a "data" variable.
 # If the file does not exist or does not contain JSON data, set "data" to an empty list instead.
 # This is the only time that the program should need to read anything from the file.
@@ -123,7 +135,7 @@ except:
 print('Welcome to the QuoteMaster Admin Program.')
 
 while True:
-    print('Choose [a]dd, [l]ist, [s]earch, [v]iew, [d]elete or [q]uit.')
+    print('Choose [a]dd, [l]ist, [s]earch, [v]iew, [r]amdom, [i]nsert, [d]elete or [q]uit.')
     choice = input('> ')
         
     if choice == 'a':
@@ -152,16 +164,13 @@ while True:
         search_term = inputSomething('Enter a search term: ')
         searchQuote(search_term)
         
-        
-
-
 
     elif choice == 'v':
         # View a quote.
         # See Point 6 of the "Requirements of admin.py" section of the assignment brief.
         # Quotes should be displayed in the "full" format when viewing.
         index = inputInt('Quote number to view: ')
-        viewQuote(index)
+        viewQuote(index-1)
 
         
 
@@ -169,7 +178,7 @@ while True:
         # Delete a quote.
         # See Point 7 of the "Requirements of admin.py" section of the assignment brief.
         index = inputInt('Quote number to delete: ')
-        deleteQuote(index)
+        deleteQuote(index-1)
 
         
 
@@ -178,6 +187,29 @@ while True:
         # See Point 8 of the "Requirements of admin.py" section of the assignment brief.
         print("Goodbye!")
         break
+    elif choice == 'r':
+        # Random a quote.
+        # See Point 8 of the "Requirements of admin.py" section of the assignment brief.
+        
+        random_index = random.randint(0, len(data)-1)
+        viewQuote(random_index)
+    elif choice == 'i':
+        # Insert a quote.
+        # See Point 8 of the "Requirements of admin.py" section of the assignment brief.
+        try:
+            quote_details = inputSomething('Enter the quote details in the format of: ("Brevity is the soul of wit." - William Shakespeare, 1602): ')
+            quote =  quote_details.split('"')[1]
+            print("quote", quote)
+            total_possible_author = len(quote_details.split('-')[1].split(',')[0].strip())
+            print("total_possible_author", total_possible_author)
+            print(quote_details.split('-')[1].split(',')[0].strip())
+            author = quote_details.split('-')[1].split(',')[total_possible_author-1].strip()
+            print("author", author)
+            year = quote_details.split(',')[1].strip()
+            print("year", year)
+        except:
+            print("Invalid format")
+            continue
 
 
 

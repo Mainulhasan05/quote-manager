@@ -1,17 +1,17 @@
 [
     {
-        "quote": "Brevity is the soul of wit.",
-        "author": "William Shakespeare",
-        "year": "1602"
+        "quote": "The only true wisdom is in knowing you know nothing.",
+        "author": "Socrates",
+        "year": "399 BC"
     },
     {
-        "quote": "Time is money.",
-        "author": "Mainul",
-        "year": "u"
+        "quote": "Innovation distinguishes between a leader and a follower.",
+        "author": "Steve Jobs",
+        "year": "2001"
     },
     {
-        "quote": "Mom said, Money don't - waste a thing",
-        "author": "Mom",
-        "year": "u"
+        "quote": "Do what you can, with what you have, where you are.",
+        "author": "Theodore Roosevelt",
+        "year": "1901"
     }
 ]

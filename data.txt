@@ -12,6 +12,6 @@
     {
         "quote": "Do what you can, with what you have, where you are.",
         "author": "Theodore Roosevelt",
-        "year": "1901"
+        "year": "u"
     }
 ]

@@ -118,13 +118,25 @@ class ProgramGUI:
         #
         # See Point 2 of the "Methods in the GUI Class of quotemaster.py" section of the assignment brief.
         # This method should check if the chosen name is the correct author of the quote.
-        
+        percentage = 0
         if chosenName == self.selectedQuote['author']:
+            year = self.selectedQuote['year']
+            
             self.score += 1
-            tkinter.messagebox.showinfo("Correct!", f"You are correct! Your score is {self.score}/{self.questionCount}.")
+            percentage = round(self.score / self.questionCount * 100)
+            if tkinter.messagebox.askyesno("Correct!", f"You are correct!\n {"It was said in "+year+".\n" if year!='u' else "" } Your score is {self.score}/{self.questionCount}. \n You got {percentage}% of the questions correct.\n\n Continue ?"):
+                self.loadQuote()
+            else:
+                self.root.destroy()
+            
         else:
             # self.score -= 1
-            tkinter.messagebox.showerror("Incorrect!", f"Incorrect! Your score is {self.score}/{self.questionCount}.")
+            percentage = round(self.score / self.questionCount * 100)
+            if tkinter.messagebox.askyesno("Incorrect!", f"Incorrect! The correct answer is {self.selectedQuote['author']}.\n Your score is {self.score}/{self.questionCount}. \n You got {percentage}% of the questions correct.\n\n Continue ?"):
+                self.loadQuote()
+            else:
+                self.root.destroy()
+            
         
         self.scoreLabel.config(text=f'Score: {self.score}')
         self.loadQuote()

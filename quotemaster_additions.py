@@ -47,6 +47,7 @@ class ProgramGUI:
         self.score = 0
         self.questionCount = 0
         self.timer=10
+        self.timerId = None
         
         
         self.root.configure(bg='#f5f5f5')
@@ -71,10 +72,15 @@ class ProgramGUI:
             widget.destroy()
         self.headingLabel = tkinter.Label(self.frame, width=500, fg='#ecf0f1', text="QuoteMaster",font=('Arial', 20, 'bold'), bg='#2c3e50')
         self.headingLabel.pack(pady=10)
-        #
-        # See Point 1 of the "Methods in the GUI Class of quotemaster.py" section of the assignment brief.
         self.timerLabel = tkinter.Label(self.frame, text=f'Time Left: {self.timer}', bg='lightblue')
         self.timerLabel.pack(pady=10)
+        #
+        # See Point 1 of the "Methods in the GUI Class of quotemaster.py" section of the assignment brief.
+
+        if self.timerId:
+            self.root.after_cancel(self.timerId)
+        self.startTimer()
+        
         
         self.questionCount += 1 
         self.selectedQuote = random.choice(self.data)
@@ -142,10 +148,24 @@ class ProgramGUI:
             
         
         self.scoreLabel.config(text=f'Score: {self.score}')
-        self.loadQuote()
-        pass
+        
 
+    def startTimer(self):
+        self.timer = 10
+        self.timerLabel.config(text=f'Time Left: {self.timer}')
+        self.timerId = self.root.after(1000, self.updateTimer)
 
+    def updateTimer(self):
+        self.timer -= 1
+        if self.timer <=3:
+            # change color to red
+            self.timerLabel.config(fg='red')
+        self.timerLabel.config(text=f'Time Left: {self.timer}')
+        if self.timer <= 0:
+            self.root.after_cancel(self.timerId)
+            self.loadQuote()
+        else:
+            self.timerId = self.root.after(1000, self.updateTimer)
 
 # Create an object of the ProgramGUI class to begin the program.
 gui = ProgramGUI()

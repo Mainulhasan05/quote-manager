@@ -16,7 +16,7 @@ import tkinter
 import tkinter.messagebox
 import json
 import random
-
+import time
 
 class ProgramGUI:
 
@@ -24,6 +24,7 @@ class ProgramGUI:
         self.root = tkinter.Tk()
         self.root.geometry('500x500')
         self.root.title('QuoteMaster')
+        self.root.iconbitmap('icon.ico')
         try: 
             with open('data.txt', 'r') as file:
                 self.data = json.load(file)
@@ -45,6 +46,7 @@ class ProgramGUI:
         # creating attributes
         self.score = 0
         self.questionCount = 0
+        self.timer=10
         
         
         self.root.configure(bg='#f5f5f5')
@@ -71,6 +73,8 @@ class ProgramGUI:
         self.headingLabel.pack(pady=10)
         #
         # See Point 1 of the "Methods in the GUI Class of quotemaster.py" section of the assignment brief.
+        self.timerLabel = tkinter.Label(self.frame, text=f'Time Left: {self.timer}', bg='lightblue')
+        self.timerLabel.pack(pady=10)
         
         self.questionCount += 1 
         self.selectedQuote = random.choice(self.data)
@@ -112,8 +116,7 @@ class ProgramGUI:
         
         pass
 
-
-
+    
     def checkAnswer(self, chosenName):
         #
         # See Point 2 of the "Methods in the GUI Class of quotemaster.py" section of the assignment brief.
